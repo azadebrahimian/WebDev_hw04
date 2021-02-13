@@ -2,15 +2,24 @@ defmodule Practice.Factor do
     # Credit for algorithm: https://www.geeksforgeeks.org/print-all-prime-factors-of-a-given-number/
 
     def eval(n) do
-        n = String.to_integer(n)
+        n = parse_int(n)
         {n, out} = findNumTwos(n, [])
         {n, out} = skipThrough(n, out, 3, :math.sqrt(n)+1)
 	if n > 2 do
             out = List.insert_at(out, -1, n)
-	    Enum.join(out, " ")
+	    out
 	else
-	    Enum.join(out, " ")
+	    out
 	end
+    end
+
+    def parse_int(text) when is_integer(text) do
+        text
+    end
+
+    def parse_int(text) do 
+        {num, _} = Integer.parse(text)
+	num
     end
  
     def divideByIndex(n, out, i) do
